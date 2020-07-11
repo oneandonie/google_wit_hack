@@ -5,6 +5,7 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.red.withOpacity(0.9),
         title: Text('EvacuAid'),
       ),
       body: SingleChildScrollView(
