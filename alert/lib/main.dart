@@ -37,6 +37,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Completer<GoogleMapController> _controller = Completer();
+  bool _isHelpButtonDisabled = false;
 
   static final CameraPosition _kKurnell = CameraPosition(
     target: LatLng(-34.012244, 151.228151),
@@ -44,13 +45,61 @@ class _MyHomePageState extends State<MyHomePage> {
   );
 
   Widget _buildMap() {
-    return GoogleMap(
-      initialCameraPosition: _kKurnell,
+    return Container(
+      height: MediaQuery.of(context).size.height - 100,
+      child: GoogleMap(
+        initialCameraPosition: _kKurnell,
+      ),
     );
   }
 
-  void _onHelpButtonPressed() {
-
+  Widget _buildHelpButton(BuildContext context) {
+    return Stack(
+            children: <Widget>[
+              Positioned(
+                child: RawMaterialButton(
+                  onPressed: () {},
+                  elevation: 2.0,
+                  shape: CircleBorder(),
+                  fillColor: Colors.grey.withOpacity(0.5),
+                  padding:EdgeInsets.all(130),
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                child: RawMaterialButton(
+                  onLongPress: () {
+                    setState(() {
+                      _isHelpButtonDisabled = true;
+                    });
+                    final snackBar = SnackBar(
+                      content: Text("Alerting Emergency Services..."),
+                      action: SnackBarAction(
+                        label: "UNDO",
+                        onPressed: () {
+                          setState(() => _isHelpButtonDisabled = false);
+                        },
+                      ),
+                    );
+                    _scaffoldKey.currentState.showSnackBar(snackBar);
+                  },
+                  enableFeedback: true,
+                  elevation: 2.0,
+                  shape: CircleBorder(),
+                  fillColor: Colors.red.withOpacity(0.9),
+                  padding: EdgeInsets.all(90),
+                  child: Text(
+                    "HELP",
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+    );
   }
 
   @override
@@ -90,34 +139,23 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Container(
                 height: MediaQuery.of(context).size.height - 100,
-                child: _buildMap(),
-              ),
-              Positioned(
-                bottom: 80,
-                child: RawMaterialButton(
-                  onPressed: () {},
-                  elevation: 2.0,
-                  shape: CircleBorder(),
-                  fillColor: Colors.grey.withOpacity(0.5),
-                  padding:EdgeInsets.all(130),
-                ),
-              ),
-              Positioned(
-                bottom: 100,
-                child: RawMaterialButton(
-                  onPressed: () => _onHelpButtonPressed,
-                  elevation: 2.0,
-                  shape: CircleBorder(),
-                  fillColor: Colors.red.withOpacity(0.9),
-                  padding: EdgeInsets.all(90),
-                  child: Text(
-                    "HELP",
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: MediaQuery.of(context).size.height - 100,
+                      child: GoogleMap(
+                        initialCameraPosition: _kKurnell,
+                      ),
                     ),
-                  ),
+                    Visibility(
+                      visible: _isHelpButtonDisabled ? false : true,
+                      child: Positioned(
+                        bottom: 80,
+                        child: _buildHelpButton(context),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
