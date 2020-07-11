@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 import 'notification.dart';
@@ -26,9 +27,25 @@ class _NotificationBottomSheet extends State<NotificationBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
-      color: Colors.blue,
+      color: Colors.amber,
       height: 160,
+      child: ListView.builder(
+        padding: EdgeInsets.all(8),
+        itemCount: notifications.length,
+        itemBuilder: (BuildContext context, int index) {
+          AlertNotification notif = notifications[index];
+          return Container(
+            color: Colors.white,
+            child: ListTile(
+                title: Text(notif.title),
+                subtitle: Text(notif.description),
+                leading: Text(notif.timeAdded.toString()),
+            ),
+          );
+        }
+      )
     );
   }
 }
