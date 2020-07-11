@@ -1,12 +1,40 @@
 import 'package:flutter/material.dart';
 
-class Profile extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<ProfilePage> {
+  bool _isEditMode;
+
+  @override
+  void initState() {
+    super.initState();
+    _isEditMode = false;
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red.withOpacity(0.9),
         title: Text('EvacuAid'),
+        actions: [
+          _isEditMode ? IconButton(
+            icon: Icon(Icons.done),
+            onPressed: () {
+              setState(() => _isEditMode = false );
+            }
+          ): IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () {
+              setState(() => _isEditMode = true );
+            }
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -237,12 +265,13 @@ class Profile extends StatelessWidget {
                   Icons.local_hospital,
                 ),
                 SizedBox(width: 10),
-                Text(
-                  "Medical Information",
-                  overflow: TextOverflow.clip,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Text(
+                    "Medical Information",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
@@ -300,8 +329,7 @@ class Profile extends StatelessWidget {
           SizedBox(
             width: 5,
           ),
-          Container(
-            width: 100,
+          Expanded(
             child: Text(
               "Unit 1/A 123 Chicken Road Farm 2130 NSW",
               style: TextStyle(
