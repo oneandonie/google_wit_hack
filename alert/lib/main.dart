@@ -38,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Completer<GoogleMapController> _controller = Completer();
   bool _isHelpButtonDisabled = false;
+  Set<Marker> _markers = Set<Marker>();
 
   static final CameraPosition _randomStartPos = CameraPosition(
     target: LatLng(-33.874863, 150.970239),
@@ -88,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
         zoomGesturesEnabled: true,
         myLocationEnabled: true,
         initialCameraPosition: _randomStartPos,
-        markers: _createMarkers(),
+        markers: _markers,
       ),
     );
   }
@@ -111,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onLongPress: () async {
                     setState(() {
                       _isHelpButtonDisabled = true;
+                      _markers = _createMarkers();
                     });
                     final snackBar = SnackBar(
                       content: Text("Alerting Emergency Services..."),
@@ -119,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         onPressed: () {
                           setState(() {
                             _isHelpButtonDisabled = false;
+                            _markers.clear();
                           });
                         },
                       ),
