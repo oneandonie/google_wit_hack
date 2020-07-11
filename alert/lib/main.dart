@@ -35,16 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 1)).then((_) {
-      showBottomSheet(
-          context: context,
-          builder: (builder) {
-            return Container(
-              color: Colors.blue,
-            );
-          });
-    });
-
     super.initState();
   }
 
