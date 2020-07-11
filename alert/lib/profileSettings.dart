@@ -15,6 +15,7 @@ class Profile extends StatelessWidget {
               overflow: Overflow.visible,
               children: <Widget>[
                 Image(
+                  excludeFromSemantics: true,
                   height: MediaQuery.of(context).size.height / 4,
                   fit: BoxFit.cover,
                   image: AssetImage("../images/pano_mountain_bg.jpeg"),

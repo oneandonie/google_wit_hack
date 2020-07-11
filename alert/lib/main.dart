@@ -67,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: [
           IconButton(
+            tooltip: 'profile',
             icon: Icon(
               Icons.account_circle,
               size: 40,
@@ -105,26 +106,27 @@ class _MyHomePageState extends State<MyHomePage> {
               Positioned(
                 bottom: 100,
                 child: RawMaterialButton(
-                  onPressed: () => _onHelpButtonPressed,
-                  elevation: 2.0,
-                  shape: CircleBorder(),
-                  fillColor: Colors.red.withOpacity(0.9),
-                  padding: EdgeInsets.all(90),
-                  child: Text(
-                    "HELP",
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                    onPressed: () => _onHelpButtonPressed,
+                    elevation: 2.0,
+                    shape: CircleBorder(),
+                    fillColor: Colors.red.withOpacity(0.9),
+                    padding: EdgeInsets.all(90),
+                    child: Text(
+                      "HELP",
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.8),
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        tooltip: 'notifications',
         backgroundColor: Colors.red.withOpacity(0.9),
         child: Icon(Icons.notifications),
         onPressed: () {
