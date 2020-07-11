@@ -66,11 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.notifications),
         onPressed: () {
           showModalBottomSheet(context: context, builder: (BuildContext context) {
             return Container(
-              height: 200,
-              color: Colors.amber,
               child: NotificationBottomSheet(),
             );
           });

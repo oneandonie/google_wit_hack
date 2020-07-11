@@ -27,25 +27,45 @@ class _NotificationBottomSheet extends State<NotificationBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
-      color: Colors.amber,
-      height: 160,
-      child: ListView.builder(
-        padding: EdgeInsets.all(8),
+      height: MediaQuery.of(context).size.height * 0.5,
+      child: ListView.separated(
+        padding: EdgeInsets.all(16),
         itemCount: notifications.length,
+        separatorBuilder: (BuildContext context, int index) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            height: 12.0,
+          );
+        },
         itemBuilder: (BuildContext context, int index) {
           AlertNotification notif = notifications[index];
           return Container(
-            color: Colors.white,
+            decoration: BoxDecoration(
+              color: Colors.red[100],
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
             child: ListTile(
-                title: Text(notif.title),
-                subtitle: Text(notif.description),
-                leading: Text(notif.timeAdded.toString()),
+              title: Text(notif.title.toString()),
+              subtitle: Text(notif.description.toString()),
+              leading: Container(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(notif.timeAdded.day.toString()
+                        + "-" + notif.timeAdded.month.toString()
+                        + "-" + notif.timeAdded.year.toString()),
+                    Text(notif.timeAdded.hour.toString()
+                        + ":" + notif.timeAdded.minute.toString()),
+                  ],
+                ),
+              ),
             ),
           );
-        }
-      )
+        },
+      ),
     );
   }
 }
+
