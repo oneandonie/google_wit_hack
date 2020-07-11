@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   onPressed: () {
                     Toast.show(
-                      "Hold button for 3 seconds to activate alert",
+                      "Long press to activate alert",
                       context,
                       duration: Toast.LENGTH_LONG,
                       gravity: Toast.BOTTOM,
