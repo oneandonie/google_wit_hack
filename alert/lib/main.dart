@@ -39,16 +39,56 @@ class _MyHomePageState extends State<MyHomePage> {
   Completer<GoogleMapController> _controller = Completer();
   bool _isHelpButtonDisabled = false;
 
-  static final CameraPosition _kKurnell = CameraPosition(
-    target: LatLng(-34.012244, 151.228151),
-    zoom: 15.4746,
+  static final CameraPosition _randomStartPos = CameraPosition(
+    target: LatLng(-33.874863, 150.970239),
+    zoom: 11.0
   );
+
+  static final LatLng _startLatLng = LatLng(-29.395797, 153.234807);
+  static final CameraPosition _startPos = CameraPosition(
+      target: _startLatLng,
+      zoom: 15.0,
+  );
+
+  static final LatLng _destLatLng = LatLng(-29.388767, 153.230752);
+  static final CameraPosition _destPos = CameraPosition(
+    target: _destLatLng,
+    zoom: 16.0,
+  );
+
+  Set<Marker> _createMarkers() {
+    return <Marker>[
+      Marker(
+        markerId: MarkerId("start_marker"),
+        position: _startLatLng,
+        infoWindow: InfoWindow(
+          title: 'Your Location',
+        ),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+      ),
+      Marker(
+        markerId: MarkerId("dest_marker"),
+        position: _destLatLng,
+        infoWindow: InfoWindow(
+          title: 'Destination',
+          snippet: 'Chatswood Island Public School',
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      )
+    ].toSet();
+  }
 
   Widget _buildMap() {
     return Container(
       height: MediaQuery.of(context).size.height - 100,
       child: GoogleMap(
-        initialCameraPosition: _kKurnell,
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+        zoomGesturesEnabled: true,
+        myLocationEnabled: true,
+        initialCameraPosition: _randomStartPos,
+        markers: _createMarkers(),
       ),
     );
   }
@@ -68,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Positioned(
                 bottom: 20,
                 child: RawMaterialButton(
-                  onLongPress: () {
+                  onLongPress: () async {
                     setState(() {
                       _isHelpButtonDisabled = true;
                     });
@@ -77,11 +117,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       action: SnackBarAction(
                         label: "UNDO",
                         onPressed: () {
-                          setState(() => _isHelpButtonDisabled = false);
+                          setState(() {
+                            _isHelpButtonDisabled = false;
+                          });
                         },
                       ),
                     );
                     _scaffoldKey.currentState.showSnackBar(snackBar);
+                    final controller = await _controller.future;
+                    controller.animateCamera(CameraUpdate.newCameraPosition(_startPos));
                   },
                   enableFeedback: true,
                   elevation: 2.0,
@@ -144,9 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: <Widget>[
                     Container(
                       height: MediaQuery.of(context).size.height - 100,
-                      child: GoogleMap(
-                        initialCameraPosition: _kKurnell,
-                      ),
+                      child: _buildMap(),
                     ),
                     Visibility(
                       visible: _isHelpButtonDisabled ? false : true,
