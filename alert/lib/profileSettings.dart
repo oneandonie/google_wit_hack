@@ -321,15 +321,13 @@ class Profile extends StatelessWidget {
             color: Colors.black.withOpacity(0.6),
           ),
           SizedBox(width: 5),
-          Expanded(
-            child:Text(
-              "29 February 1988",
+            Text(
+              "29/02/1988",
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 14,
                 color: Colors.grey,
               ),
             ),
-          ),
         ],
       ),
     );
