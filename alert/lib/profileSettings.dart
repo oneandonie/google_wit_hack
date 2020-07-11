@@ -48,7 +48,7 @@ class Profile extends StatelessWidget {
             _buildAddressAndDOB(),
             SizedBox(height:10),
             _buildMedicalRequirements(),
-            _buildEmergencyContacts(),
+            _buildEmergencyContacts(context),
             _buildEmergencyInformation(),
             SizedBox(height: 10,),
           ],
@@ -124,7 +124,7 @@ class Profile extends StatelessWidget {
     );
   }
   
-  Widget _buildEmergencyContacts() {
+  Widget _buildEmergencyContacts(BuildContext context) {
     return Card(
       margin: EdgeInsets.all(10),
       shape: RoundedRectangleBorder(
@@ -160,23 +160,25 @@ class Profile extends StatelessWidget {
                       backgroundImage: AssetImage("../images/successful_man.jpg"),
                     ),
                     SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Sel Leena",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Sel Leena",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          "Relationship: Carer"
-                        ),
-                        Text("Phone: 9512 1234"),
-                        Text("Address: Fairview Clinic"),
-                      ],
+                          SizedBox(height: 5),
+                          Text(
+                              "Relationship: Carer"
+                          ),
+                          Text("Phone: 9512 1234"),
+                          Text("Address: Fairview Clinic"),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -188,23 +190,25 @@ class Profile extends StatelessWidget {
                       backgroundImage: AssetImage("../images/young_female.jpg"),
                     ),
                     SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Jessie Wu",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Jessie Wu",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                            "Relationship: Sister"
-                        ),
-                        Text("Phone: 0412 345 678"),
-                        Text("Address: 123 Smith Ave"),
-                      ],
+                          SizedBox(height: 5),
+                          Text(
+                              "Relationship: Sister"
+                          ),
+                          Text("Phone: 0412 345 678"),
+                          Text("Address: 123 Smith Ave"),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -234,6 +238,7 @@ class Profile extends StatelessWidget {
                 SizedBox(width: 10),
                 Text(
                   "Medical Information",
+                  overflow: TextOverflow.clip,
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -245,15 +250,27 @@ class Profile extends StatelessWidget {
             SizedBox(height: 5),
             Row(
               children: <Widget>[
-                Text("Condition: "),
-                Text("Paraplegic"),
+                Text(
+                    "Condition: ",
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                    "Paraplegic",
+                  overflow: TextOverflow.fade,
+                ),
               ],
             ),
             SizedBox(height: 5),
             Row(
               children: <Widget>[
-                Text("Accessibility: "),
-                Text("Stretcher Evacuation"),
+                Text(
+                    "Accessibility: ",
+                ),
+                Expanded(
+                  child: Text(
+                    "Stretcher Evacuation",
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 5),
@@ -303,11 +320,13 @@ class Profile extends StatelessWidget {
             color: Colors.black.withOpacity(0.6),
           ),
           SizedBox(width: 5),
-          Text(
-            "29 February 1988",
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey,
+          Expanded(
+            child:Text(
+              "29 February 1988",
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey,
+              ),
             ),
           ),
         ],
