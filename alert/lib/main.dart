@@ -178,9 +178,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          Stack(
+      body: Stack(
             alignment: Alignment.center,
             overflow: Overflow.visible,
             children: <Widget>[
@@ -204,17 +202,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ],
-          ),
-        ],
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'notifications',
-        backgroundColor: Colors.red.withOpacity(0.9),
-        child: Icon(Icons.notifications),
-        onPressed: () {
-          buildBottomSheet(context);
-          },
-      ),
+            tooltip: 'notifications',
+            backgroundColor: Colors.red.withOpacity(0.9),
+            child: Icon(Icons.notifications),
+            onPressed: () {
+              buildBottomSheet(context);
+            },
+          ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
