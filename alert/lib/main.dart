@@ -73,13 +73,26 @@ class _MyHomePageState extends State<MyHomePage> {
               builder: (BuildContext context) {
                   return Container(
                     color: Colors.transparent,
-                    height: MediaQuery.of(context).size.height * 0.9,
-                    child: DraggableScrollableSheet(
-                      initialChildSize: 1.0,
-                      minChildSize: 1.0,
-                      builder: (BuildContext context, ScrollController scrollController) {
-                        return NotificationBottomSheet(scrollController);
-                      }
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    height: MediaQuery.of(context).size.height
+                        - kToolbarHeight,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                            "Notifications",
+                          style: TextStyle(fontSize: 20, fontFamily: "Raleway"),
+                        ),
+                        Expanded(
+                          child: DraggableScrollableSheet(
+                              initialChildSize: 1.0,
+                              minChildSize: 1.0,
+                              builder: (BuildContext context, ScrollController scrollController) {
+                                return NotificationBottomSheet(scrollController);
+                              }
+                          ),
+                        ),
+                      ],
                     ),
                 );
               },

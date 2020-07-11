@@ -57,7 +57,7 @@ class _NotificationBottomSheet extends State<NotificationBottomSheet> {
           AlertNotification notif = notifications[index];
           return Container(
             decoration: BoxDecoration(
-              color: Colors.red[100],
+              color: Colors.blue[100],
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             child: ListTile(
