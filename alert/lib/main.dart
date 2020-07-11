@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:alert/profileSettings.dart';
+import 'profileSettings.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:toast/toast.dart';
 import 'notificationBottomsheet.dart';
 
 void main() {
@@ -129,6 +129,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     _scaffoldKey.currentState.showSnackBar(snackBar);
                     final controller = await _controller.future;
                     controller.animateCamera(CameraUpdate.newCameraPosition(_startPos));
+                  },
+                  onPressed: () {
+                    Toast.show(
+                      "Hold button for 3 seconds to activate alert",
+                      context,
+                      duration: Toast.LENGTH_LONG,
+                      gravity: Toast.BOTTOM,
+                    );
                   },
                   enableFeedback: true,
                   elevation: 2.0,
