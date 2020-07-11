@@ -27,9 +27,18 @@ class _NotificationBottomSheet extends State<NotificationBottomSheet> {
     super.initState();
     notifications = List<AlertNotification>();
     notifications.addAll([
-      AlertNotification("test title0", "test desc0", DateTime.now()),
-      AlertNotification("test title1", "test desc1", DateTime.now()),
-      AlertNotification("test title2", "test desc2", DateTime.now())
+      AlertNotification("Wind Warnings for Saturday 11 July",
+          "Cancellation for the following areas: Torres Strait, "
+              "Peninsula Coast and Cooktown Coast",
+          DateTime(
+            2020, 7, 11, 15, 30
+          )),
+      AlertNotification("Wind Warnings for Sunday 12 July",
+          "Strong Wind Warnings for the following areas: "
+              "South East Gulf of Carpentaria",
+          DateTime(
+            2020, 7, 11, 15, 50
+          )),
     ]);
   }
 
@@ -56,6 +65,7 @@ class _NotificationBottomSheet extends State<NotificationBottomSheet> {
         itemBuilder: (BuildContext context, int index) {
           AlertNotification notif = notifications[index];
           return Container(
+            padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.blue[100],
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
