@@ -68,12 +68,24 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.notifications),
         onPressed: () {
-          showModalBottomSheet(context: context, builder: (BuildContext context) {
-            return Container(
-              child: NotificationBottomSheet(),
-            );
-          });
-        },
+          showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                  return Container(
+                    color: Colors.transparent,
+                    height: MediaQuery.of(context).size.height * 0.9,
+                    child: DraggableScrollableSheet(
+                      initialChildSize: 1.0,
+                      minChildSize: 1.0,
+                      builder: (BuildContext context, ScrollController scrollController) {
+                        return NotificationBottomSheet(scrollController);
+                      }
+                    ),
+                );
+              },
+              isScrollControlled: true,
+              );
+          },
       ),
     );
   }

@@ -6,13 +6,21 @@ import 'notification.dart';
 
 class NotificationBottomSheet extends StatefulWidget {
 
+  NotificationBottomSheet(this._scrollController);
+
+  ScrollController _scrollController;
+
   @override
-  _NotificationBottomSheet createState() => _NotificationBottomSheet();
+  _NotificationBottomSheet createState() =>
+      _NotificationBottomSheet(_scrollController);
 }
 
 class _NotificationBottomSheet extends State<NotificationBottomSheet> {
 
   List<AlertNotification> notifications;
+  ScrollController _scrollController;
+
+  _NotificationBottomSheet(this._scrollController);
 
   @override
   void initState() {
@@ -28,8 +36,15 @@ class _NotificationBottomSheet extends State<NotificationBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+      ),
       child: ListView.separated(
+        controller: _scrollController,
         padding: EdgeInsets.all(16),
         itemCount: notifications.length,
         separatorBuilder: (BuildContext context, int index) {
@@ -50,7 +65,6 @@ class _NotificationBottomSheet extends State<NotificationBottomSheet> {
               subtitle: Text(notif.description.toString()),
               leading: Container(
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(notif.timeAdded.day.toString()
