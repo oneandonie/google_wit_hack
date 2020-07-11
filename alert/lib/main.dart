@@ -38,16 +38,20 @@ class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Completer<GoogleMapController> _controller = Completer();
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
+  static final CameraPosition _kKurnell = CameraPosition(
     target: LatLng(-34.012244, 151.228151),
-    zoom: 14.4746,
+    zoom: 15.4746,
   );
 
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  Widget _buildMap() {
+    return GoogleMap(
+      initialCameraPosition: _kKurnell,
+    );
+  }
+
+  void _onHelpButtonPressed() {
+
+  }
 
   @override
   void initState() {
@@ -59,10 +63,14 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Colors.red.withOpacity(0.9),
         title: Text(widget.title),
         actions: [
           IconButton(
-            icon: Icon(Icons.account_circle),
+            icon: Icon(
+              Icons.account_circle,
+              size: 40,
+            ),
             onPressed: () {
               Navigator.push(
                 context,
@@ -74,17 +82,50 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-          ],
-        ),
+      body: Column(
+        children: <Widget>[
+          Stack(
+            alignment: Alignment.center,
+            overflow: Overflow.visible,
+            children: <Widget>[
+              Container(
+                height: MediaQuery.of(context).size.height - 100,
+                child: _buildMap(),
+              ),
+              Positioned(
+                bottom: 80,
+                child: RawMaterialButton(
+                  onPressed: () {},
+                  elevation: 2.0,
+                  shape: CircleBorder(),
+                  fillColor: Colors.grey.withOpacity(0.5),
+                  padding:EdgeInsets.all(130),
+                ),
+              ),
+              Positioned(
+                bottom: 100,
+                child: RawMaterialButton(
+                  onPressed: () => _onHelpButtonPressed,
+                  elevation: 2.0,
+                  shape: CircleBorder(),
+                  fillColor: Colors.red.withOpacity(0.9),
+                  padding: EdgeInsets.all(90),
+                  child: Text(
+                    "HELP",
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.red.withOpacity(0.9),
         child: Icon(Icons.notifications),
         onPressed: () {
           showModalBottomSheet(
