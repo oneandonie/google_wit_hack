@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'notificationBottomsheet.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -75,8 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          return;
-        }
+          showModalBottomSheet(context: context, builder: (BuildContext context) {
+            return Container(
+              height: 200,
+              color: Colors.amber,
+              child: NotificationBottomSheet(),
+            );
+          });
+        },
       ),
     );
   }
