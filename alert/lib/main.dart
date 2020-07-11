@@ -1,3 +1,4 @@
+import 'package:alert/profileSettings.dart';
 import 'package:flutter/material.dart';
 
 import 'notificationBottomsheet.dart';
@@ -48,9 +49,12 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: Icon(Icons.account_circle),
             onPressed: () {
-              _scaffoldKey.currentState.showSnackBar(SnackBar(
-                  content: Text("go to profile")
-              ));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => Profile()
+                ),
+              );
             },
           ),
         ],
