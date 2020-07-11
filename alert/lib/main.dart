@@ -245,7 +245,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Text(
                   "Notifications",
-                  style: TextStyle(fontSize: 20, fontFamily: "Raleway"),
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: "Raleway",
+                  ),
                 ),
                 Expanded(
                   child: DraggableScrollableSheet(
