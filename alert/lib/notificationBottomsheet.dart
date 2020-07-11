@@ -45,13 +45,6 @@ class _NotificationBottomSheet extends State<NotificationBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20.0),
-          topRight: Radius.circular(20.0),
-        ),
-      ),
       child: ListView.separated(
         controller: _scrollController,
         padding: EdgeInsets.all(16),
@@ -67,7 +60,7 @@ class _NotificationBottomSheet extends State<NotificationBottomSheet> {
           return Container(
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: Colors.blue[100],
+              color: Colors.red[100],
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             child: ListTile(
