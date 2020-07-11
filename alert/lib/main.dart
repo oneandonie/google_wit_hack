@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:alert/profileSettings.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'notificationBottomsheet.dart';
 
@@ -33,6 +36,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  Completer<GoogleMapController> _controller = Completer();
+
+  static final CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(-34.012244, 151.228151),
+    zoom: 14.4746,
+  );
+
+  static final CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414);
 
   @override
   void initState() {
@@ -52,13 +67,20 @@ class _MyHomePageState extends State<MyHomePage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Profile()
+                    builder: (context) => Profile()
                 ),
               );
             },
           ),
         ],
       ),
+//      body: GoogleMap(
+//        mapType: MapType.hybrid,
+//        initialCameraPosition: _kGooglePlex,
+//        onMapCreated: (GoogleMapController controller) {
+//          _controller.complete(controller);
+//        },
+//      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -70,14 +92,38 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.notifications),
         onPressed: () {
-          showModalBottomSheet(context: context, builder: (BuildContext context) {
-            return Container(
-              height: 200,
-              color: Colors.amber,
-              child: NotificationBottomSheet(),
-            );
-          });
+          showModalBottomSheet(
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                color: Colors.transparent,
+                padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                height: MediaQuery.of(context).size.height
+                    - kToolbarHeight,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Notifications",
+                      style: TextStyle(fontSize: 20, fontFamily: "Raleway"),
+                    ),
+                    Expanded(
+                      child: DraggableScrollableSheet(
+                          initialChildSize: 1.0,
+                          minChildSize: 1.0,
+                          builder: (BuildContext context, ScrollController scrollController) {
+                            return NotificationBottomSheet(scrollController);
+                          }
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+            isScrollControlled: true,
+          );
         },
       ),
     );
