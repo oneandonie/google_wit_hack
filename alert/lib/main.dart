@@ -37,20 +37,116 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Completer<GoogleMapController> _controller = Completer();
+  bool _isHelpButtonDisabled = false;
+  Set<Marker> _markers = Set<Marker>();
 
-  static final CameraPosition _kKurnell = CameraPosition(
-    target: LatLng(-34.012244, 151.228151),
-    zoom: 15.4746,
+  static final CameraPosition _randomStartPos = CameraPosition(
+    target: LatLng(-33.874863, 150.970239),
+    zoom: 11.0
   );
 
+  static final LatLng _startLatLng = LatLng(-29.395797, 153.234807);
+  static final CameraPosition _startPos = CameraPosition(
+      target: _startLatLng,
+      zoom: 15.0,
+  );
+
+  static final LatLng _destLatLng = LatLng(-29.388767, 153.230752);
+  static final CameraPosition _destPos = CameraPosition(
+    target: _destLatLng,
+    zoom: 16.0,
+  );
+
+  Set<Marker> _createMarkers() {
+    return <Marker>[
+      Marker(
+        markerId: MarkerId("start_marker"),
+        position: _startLatLng,
+        infoWindow: InfoWindow(
+          title: 'Your Location',
+        ),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+      ),
+      Marker(
+        markerId: MarkerId("dest_marker"),
+        position: _destLatLng,
+        infoWindow: InfoWindow(
+          title: 'Destination',
+          snippet: 'Chatswood Island Public School',
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      )
+    ].toSet();
+  }
+
   Widget _buildMap() {
-    return GoogleMap(
-      initialCameraPosition: _kKurnell,
+    return Container(
+      height: MediaQuery.of(context).size.height - 100,
+      child: GoogleMap(
+        onMapCreated: (GoogleMapController controller) {
+          _controller.complete(controller);
+        },
+        zoomGesturesEnabled: true,
+        myLocationEnabled: true,
+        initialCameraPosition: _randomStartPos,
+        markers: _markers,
+      ),
     );
   }
 
-  void _onHelpButtonPressed() {
-
+  Widget _buildHelpButton(BuildContext context) {
+    return Stack(
+            children: <Widget>[
+              Positioned(
+                child: RawMaterialButton(
+                  onPressed: () {},
+                  elevation: 2.0,
+                  shape: CircleBorder(),
+                  fillColor: Colors.grey.withOpacity(0.5),
+                  padding:EdgeInsets.all(130),
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                child: RawMaterialButton(
+                  onLongPress: () async {
+                    setState(() {
+                      _isHelpButtonDisabled = true;
+                      _markers = _createMarkers();
+                    });
+                    final snackBar = SnackBar(
+                      content: Text("Alerting Emergency Services..."),
+                      action: SnackBarAction(
+                        label: "UNDO",
+                        onPressed: () {
+                          setState(() {
+                            _isHelpButtonDisabled = false;
+                            _markers.clear();
+                          });
+                        },
+                      ),
+                    );
+                    _scaffoldKey.currentState.showSnackBar(snackBar);
+                    final controller = await _controller.future;
+                    controller.animateCamera(CameraUpdate.newCameraPosition(_startPos));
+                  },
+                  enableFeedback: true,
+                  elevation: 2.0,
+                  shape: CircleBorder(),
+                  fillColor: Colors.red.withOpacity(0.9),
+                  padding: EdgeInsets.all(90),
+                  child: Text(
+                    "HELP",
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.8),
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+    );
   }
 
   @override
@@ -67,7 +163,6 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: [
           IconButton(
-            tooltip: 'profile',
             icon: Icon(
               Icons.account_circle,
               size: 40,
@@ -91,36 +186,23 @@ class _MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Container(
                 height: MediaQuery.of(context).size.height - 100,
-                child: _buildMap(),
-              ),
-              Positioned(
-                bottom: 80,
-                child: RawMaterialButton(
-                  onPressed: () {},
-                  elevation: 2.0,
-                  shape: CircleBorder(),
-                  fillColor: Colors.grey.withOpacity(0.5),
-                  padding:EdgeInsets.all(130),
-                ),
-              ),
-              Positioned(
-                bottom: 100,
-                child: RawMaterialButton(
-                    onPressed: () => _onHelpButtonPressed,
-                    elevation: 2.0,
-                    shape: CircleBorder(),
-                    fillColor: Colors.red.withOpacity(0.9),
-                    padding: EdgeInsets.all(90),
-                    child: Text(
-                      "HELP",
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.8),
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+                    Container(
+                      height: MediaQuery.of(context).size.height - 100,
+                      child: _buildMap(),
+                    ),
+                    Visibility(
+                      visible: _isHelpButtonDisabled ? false : true,
+                      child: Positioned(
+                        bottom: 80,
+                        child: _buildHelpButton(context),
                       ),
                     ),
-                  ),
+                  ],
                 ),
+              ),
             ],
           ),
         ],
