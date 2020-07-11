@@ -128,38 +128,59 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.red.withOpacity(0.9),
         child: Icon(Icons.notifications),
         onPressed: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) {
-                  return Container(
-                    color: Colors.transparent,
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    height: MediaQuery.of(context).size.height
-                        - kToolbarHeight,
-                    child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Notifications",
-                            style: TextStyle(fontSize: 20, fontFamily: "Raleway"),
-                          ),
-                          Expanded(
-                            child: DraggableScrollableSheet(
-                                initialChildSize: 1.0,
-                                minChildSize: 1.0,
-                                builder: (BuildContext context, ScrollController scrollController) {
-                                  return NotificationBottomSheet(scrollController);
-                                }
-                            ),
-                          ),
-                        ],
-                      ),
-                );
-              },
-              isScrollControlled: true,
-              );
+          buildBottomSheet(context);
           },
       ),
+    );
+  }
+
+  void buildBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          color: Colors.transparent,
+          child: Container(
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+            height: MediaQuery.of(context).size.height
+                - kToolbarHeight,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                    height: 8,
+                    width: 80,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.all(Radius.circular(40)),
+                    )
+                ),
+                Container(
+                  height: 50,
+                ),
+                Text(
+                  "Notifications",
+                  style: TextStyle(fontSize: 20, fontFamily: "Raleway"),
+                ),
+                Expanded(
+                  child: DraggableScrollableSheet(
+                      initialChildSize: 1.0,
+                      minChildSize: 1.0,
+                      builder: (BuildContext context, ScrollController scrollController) {
+                        return NotificationBottomSheet(scrollController);
+                      }
+                  ),
+                ),
+              ],
+            ),
+          )
+        );
+      },
+      isScrollControlled: true,
     );
   }
 }
