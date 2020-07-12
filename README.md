@@ -1,6 +1,6 @@
 # google_wit_hack
 
-Click [here](www.google.com) for our rough pitch deck.
+Click [here](https://drive.google.com/file/d/1ut6pdLsVyJCpS3cYTchWTVuiJ-1LmFOM/view?usp=sharing) for our rough pitch deck.
 
 Technologies [Mobile App]
  - Flutter
