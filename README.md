@@ -7,6 +7,7 @@ Technologies [Mobile App]
  - Dart
 
 _Providing all with an equal chance._ 
+
 Through EvacuAID, in a natural disaster, disabled users are able to alert their loved ones and emergency services to their location and determine the quickest route to an evacuation location.
 
   Functions:
