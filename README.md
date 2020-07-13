@@ -13,7 +13,8 @@ Through EvacuAID, in a natural disaster, disabled users are able to alert their 
 Functions:
  - Alert emergency services to your location
  - Profile with _location tag_ and _disability tag_, and medical/evacuation considerations
- - Map with automatic routing to safest evacuation location
+ - Integrated map with automatic routing to safest evacuation location
  - Live-alert natural disaster notifications
+ - Accessibility features e.g. text-to-speech, high contrast and large font options
     
  [Demo Images]
